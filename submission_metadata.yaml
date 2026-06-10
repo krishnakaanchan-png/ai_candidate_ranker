@@ -1,12 +1,45 @@
-team_name: FitFinderAi
-primary_contact_name: Kaanchan Krishna
-primary_contact_email: krishnakaanchan@gmail.com
-primary_contact_phone: "+919044277353"
-github_repository_url: "https://github.com/krishnakaanchan-png/ai_candidate_ranker"
-sandbox_demo_link: "https://colab.research.google.com/drive/xyz123"
-ai_tools_declared: ["Claude", "Gemini"]
-compute_environment_summary: "Mac M-series CPU, 16GB RAM, Python 3.11"
+team_name: "FitFinderAi"
+
+primary_contact:
+  name: "Kaanchan Krishna"
+  email: "krishnakaanchan@gmail.com"
+  phone: "+919044277353"
+
 team_members:
-  - name: Kaanchan Krishna
-    email: krishnakaanchan@gmail.com
-methodology_summary: "A two-phase architecture using sentence-transformers to embed candidate profiles offline into a FAISS index, followed by instantaneous semantic retrieval and behavioral re-ranking at runtime."
+  - name: "Kaanchan Krishna"
+    email: "krishnakaanchan@gmail.com"
+    role: "ML Engineer"
+
+github_repo: "https://github.com/krishnakaanchan-png/ai_candidate_ranker"
+
+sandbox_link: "https://colab.research.google.com/github/krishnakaanchan-png/ai_candidate_ranker/blob/main/sandbox_notebook.ipynb"
+
+reproduce_command: "python rank.py --candidates ../candidates.jsonl --out team_FitFinderAi.csv"
+
+compute:
+  platform: "MacBook Pro M-series"
+  cpu_cores: 8
+  ram_gb: 16
+  python_version: "3.14.3"
+  os: "macOS 14"
+  uses_gpu_for_inference: false
+  has_network_during_ranking: false
+  pre_computation_required: true
+  pre_computation_time_minutes: 4
+
+ai_tools_used:
+  - "Gemini"
+  - "Claude"
+
+ai_usage_summary: |
+  Used Gemini 3.1 Pro (Antigravity Agent) for architecture design, code writing (precompute.py, rank.py), debugging OpenMP issues, and generating methodology documentation.
+
+methodology_summary: |
+  A two-phase architecture using sentence-transformers to embed candidate profiles offline into a FAISS index, followed by instantaneous semantic retrieval and behavioral re-ranking at runtime.
+
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: true
+  reproduction_tested: true
