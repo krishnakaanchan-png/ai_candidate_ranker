@@ -18,14 +18,14 @@ def extract_candidate_text(c):
     text_parts.append(profile.get("summary", ""))
     text_parts.append(profile.get("headline", ""))
     
+    # Skills (put before career history to avoid model truncation)
+    for skill in c.get("skills", []):
+        text_parts.append(skill.get("name", ""))
+        
     # Career history
     for job in c.get("career_history", []):
         text_parts.append(job.get("title", ""))
         text_parts.append(job.get("description", ""))
-        
-    # Skills
-    for skill in c.get("skills", []):
-        text_parts.append(skill.get("name", ""))
         
     # Filter out empty strings and join
     text = " ".join([p for p in text_parts if p])
@@ -79,6 +79,7 @@ def main():
             # Extract metadata for later scoring
             metadata.append({
                 "candidate_id": c["candidate_id"],
+                "profile": c.get("profile", {}),
                 "yoe": c.get("profile", {}).get("years_of_experience", 0),
                 "redrob_signals": c.get("redrob_signals", {}),
                 "career_history": c.get("career_history", []),

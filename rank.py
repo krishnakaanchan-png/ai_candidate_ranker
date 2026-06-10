@@ -98,10 +98,13 @@ def main():
         metadata = pickle.load(f)
         
     print("Performing semantic search...")
-    # Retrieve top 2000 to have a good pool for re-ranking
-    D, I = index.search(jd_embedding, 2000)
+    # Retrieve top 10000 to have a deep enough pool for hard filtering
+    D, I = index.search(jd_embedding, 10000)
     
     candidates_ranked = []
+    
+    VECTOR_DBS = {"pinecone", "weaviate", "qdrant", "milvus", "opensearch", "elasticsearch", "faiss"}
+    EVALUATION = {"ndcg", "mrr", "map", "a/b test"}
     
     for i in range(len(I[0])):
         idx = I[0][i]
@@ -118,11 +121,32 @@ def main():
         if yoe < 4 or yoe > 15:
             continue
             
+        # Extract text corpus for specific hard-filter checks
+        text_corpus = c_meta.get("profile", {}).get("summary", "") + " " + c_meta.get("profile", {}).get("headline", "")
+        for job in c_meta.get("career_history", []):
+            text_corpus += " " + job.get("title", "") + " " + job.get("description", "")
+        for skill in c_meta.get("skills", []):
+            text_corpus += " " + skill.get("name", "")
+        text_corpus = text_corpus.lower()
+        
+        has_vector_db = any(db in text_corpus for db in VECTOR_DBS)
+        has_eval = any(ev in text_corpus for ev in EVALUATION)
+        
         # Background Checks
         jobs = c_meta.get("career_history", [])
         consulting_count = sum(1 for job in jobs if any(f in str(job.get("company", "")).lower() for f in ["tcs", "infosys", "wipro", "accenture", "cognizant", "capgemini"]))
         is_consulting_only = (consulting_count == len(jobs)) if jobs else False
         if is_consulting_only:
+            continue
+            
+        # Pure Research check
+        is_pure_research = "researcher" in c_meta.get("profile", {}).get("current_title", "").lower() and not has_vector_db
+        if is_pure_research:
+            continue
+            
+        # Langchain only check
+        has_langchain = "langchain" in text_corpus
+        if has_langchain and not (has_vector_db or has_eval):
             continue
             
         beh_score = calculate_behavioral_score(c_meta.get("redrob_signals", {}))
