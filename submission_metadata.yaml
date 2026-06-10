@@ -1,12 +1,12 @@
 team_name: FitFinderAi
-primary_contact_name: User
-primary_contact_email: user@example.com
-primary_contact_phone: "+1234567890"
+primary_contact_name: Kaanchan Krishna
+primary_contact_email: krishnakaanchan@gmail.com
+primary_contact_phone: "+919044277353"
 github_repository_url: "https://github.com/krishnakaanchan-png/ai_candidate_ranker"
 sandbox_demo_link: "https://colab.research.google.com/drive/xyz123"
 ai_tools_declared: ["Claude", "Gemini"]
 compute_environment_summary: "Mac M-series CPU, 16GB RAM, Python 3.11"
 team_members:
-  - name: User
-    email: user@example.com
+  - name: Kaanchan Krishna
+    email: krishnakaanchan@gmail.com
 methodology_summary: "A two-phase architecture using sentence-transformers to embed candidate profiles offline into a FAISS index, followed by instantaneous semantic retrieval and behavioral re-ranking at runtime."
