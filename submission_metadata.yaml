@@ -2,7 +2,7 @@ team_name: FitFinderAi
 primary_contact_name: User
 primary_contact_email: user@example.com
 primary_contact_phone: "+1234567890"
-github_repository_url: "https://github.com/user/ai_candidate_ranker"
+github_repository_url: "https://github.com/krishnakaanchan-png/ai_candidate_ranker"
 sandbox_demo_link: "https://colab.research.google.com/drive/xyz123"
 ai_tools_declared: ["Claude", "Gemini"]
 compute_environment_summary: "Mac M-series CPU, 16GB RAM, Python 3.11"
